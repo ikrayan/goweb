@@ -17,5 +17,4 @@ func main() {
 
 	err := http.ListenAndServe(":8080", mux) //jalankan web server
 	log.Fatal(err)
-
 }

@@ -2,8 +2,10 @@ package handler
 
 import (
 	"fmt"
+	"html/template"
 	"log"
 	"net/http"
+	"path"
 	"strconv"
 )
 
@@ -14,8 +16,28 @@ func HandlerIndex(w http.ResponseWriter, r *http.Request) {
 		http.NotFound(w, r)
 		return
 	}
-	message := "Hello World"
-	w.Write([]byte(message))
+
+	tmpl, err := template.ParseFiles(path.Join("views", "index.html"))
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Shit happen, Keep calm", http.StatusInternalServerError)
+		return
+	}
+
+	data := map[string]interface{} {
+		"title": "Learning Golang",
+		"content": "Learning Golang with Agung Setiawan",
+	}
+
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Shit happen, Keep calm", http.StatusInternalServerError)
+		return
+	}
+
+	// message := "Hello World"
+	// w.Write([]byte("Home"))
 }
 
 func HandlerAbout(w http.ResponseWriter, r *http.Request) {
