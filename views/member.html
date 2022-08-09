@@ -1,0 +1,26 @@
+{{ template "layout" .}}
+
+{{ define "main"}}
+<h3 class="border-bottom">Member</h3>
+<div class="row">
+
+    {{ range .}}
+    <div class="col my-3">
+        <div class="card" style="width: 18rem;">
+            <img src={{ .Photo }} class="card-img-top" alt="Photo Profile">
+            <div class="card-body">
+                <h5 class="card-title">{{ .Name }}</h5>
+                <p class="card-text">{{ .Level }}</p>
+                {{ if eq .Status "Active" }}
+                <a href="#" class="btn btn-primary">{{ .Status }}</a>
+                {{ else if eq .Status "Not Active"}}
+                <a href="#" class="btn btn-danger">{{ .Status }}</a>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+    {{ end }}
+
+</div>
+
+{{ end }}

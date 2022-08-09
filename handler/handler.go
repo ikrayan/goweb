@@ -1,12 +1,11 @@
 package handler
 
 import (
-	"fmt"
+	"goweb/entity"
 	"html/template"
 	"log"
 	"net/http"
 	"path"
-	"strconv"
 )
 
 func HandlerIndex(w http.ResponseWriter, r *http.Request) {
@@ -17,46 +16,146 @@ func HandlerIndex(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	tmpl, err := template.ParseFiles(path.Join("views", "index.html"))
+	tmpl, err := template.ParseFiles(path.Join("views", "index.html"), path.Join("views", "layout.html"))
 	if err != nil {
 		log.Println(err)
-		http.Error(w, "Shit happen, Keep calm", http.StatusInternalServerError)
+		http.Error(w, "Tampilin view error happen, Keep calm", http.StatusInternalServerError)
 		return
 	}
 
-	data := map[string]interface{} {
-		"title": "Learning Golang",
-		"content": "Learning Golang with Agung Setiawan",
+	// data := map[string]interface{} {
+	// 	"title": "Learning Golang",
+	// 	"content": "Learning Golang with Agung Setiawan",
+	// }
+	// data := entity.Product{ID: 1, Name: "Mobilio", Price: 220000000, Stock: 3}
+	
+	// message := "Hello World"
+	// w.Write([]byte("Home"))
+
+	err = tmpl.Execute(w, nil)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Execute data error happen, Keep calm", http.StatusInternalServerError)
+		return
+	}	
+}
+
+func ProductHandler(w http.ResponseWriter, r *http.Request) {
+	// id := r.URL.Query().Get("id")
+	// idNumb, err := strconv.Atoi(id)
+
+	// if err != nil || idNumb < 1 {
+	// 	http.NotFound(w, r)
+	// 	return
+	// }
+
+	
+
+	// fmt.Fprintf(w, "Product page : %d", idNumb)
+	// data := map[string]interface{} {
+	// 	"content": idNumb,
+	// }
+	// data := entity.Product{ID: 1, Name: "Mobilio", Price: 220000000, Stock: 3}
+
+	tmpl, err := template.ParseFiles(path.Join("views", "product.html"), path.Join("views", "layout.html"))
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Parse data error happen, Keep calm", http.StatusInternalServerError)
+		return
+	}
+
+	data := []entity.Product{
+		{ID: 1, Name: "Mobilio", Price: 220000000, Stock: 12, Photo: "/static/img/mobilio.jpg"},
+		{ID: 2, Name: "Xpander", Price: 250000000, Stock: 6, Photo: "/static/img/xpander.jpg"},
+		{ID: 3, Name: "Stargazer", Price: 280000000, Stock: 1, Photo: "/static/img/stargazer.jpg"},
 	}
 
 	err = tmpl.Execute(w, data)
 	if err != nil {
 		log.Println(err)
-		http.Error(w, "Shit happen, Keep calm", http.StatusInternalServerError)
+		http.Error(w, "Execute data error happen, Keep calm", http.StatusInternalServerError)
+		return
+	}	
+}
+
+func MemberHandler(w http.ResponseWriter, r *http.Request) {
+
+	tmpl, err := template.ParseFiles(path.Join("views", "member.html"), path.Join("views", "layout.html"))
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Parse view error happen, Keep calm", http.StatusInternalServerError)
 		return
 	}
 
-	// message := "Hello World"
-	// w.Write([]byte("Home"))
+	data := []entity.Member{
+		{ID: 1, Name: "M. Ikra Yan Hidayat", Level: "Newbie", Status: "Active", Photo: "https://picsum.photos/id/111/200"},
+		{ID: 2, Name: "Deno Norsanto", Level: "Master", Status: "Active", Photo: "https://picsum.photos/id/222/200"},
+		{ID: 3, Name: "Yuhazmi Dartius", Level: "Syifu", Status: "Not Active", Photo: "https://picsum.photos/id/99/200"},
+	}
+
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		log.Println(err)
+		http.Error(w, "Execute data error happen, Keep calm", http.StatusInternalServerError)
+		return
+	}	
 }
 
-func HandlerAbout(w http.ResponseWriter, r *http.Request) {
-	message := "About Page"
-	w.Write([]byte(message))
-}
+func FormHandler(w http.ResponseWriter, r *http.Request){
+	if r.Method == "GET" {
+		tmpl, err := template.ParseFiles(path.Join("views", "form.html"), path.Join("views", "layout.html"))
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "Shit happen, Keep calm", http.StatusInternalServerError)
+			return
+		}
 
-func ProductHandler(w http.ResponseWriter, r *http.Request) {
-	id := r.URL.Query().Get("id")
+		err = tmpl.Execute(w, nil)
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "Shit happen, Keep calm", http.StatusInternalServerError)
+			return
+		}	
 
-	idNumb, err := strconv.Atoi(id)
-
-	if err != nil || idNumb < 1 {
-		http.NotFound(w, r)
 		return
 	}
 
-	// message := "Product Page"
-	// w.Write([]byte(message))
+	http.Error(w, "Get error, Take it easy boy", http.StatusBadRequest)
+}
 
-	fmt.Fprintf(w, "Product Page : %d", idNumb)
+func ProcessForm(w http.ResponseWriter, r *http.Request){
+	if r.Method == "POST" {
+		err := r.ParseForm()
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "Parsing form error, Keep calm", http.StatusInternalServerError)
+			return
+		}
+
+		name := r.Form.Get("name")
+		pesan := r.Form.Get("pesan")
+
+		data := map[string]interface{}{
+			"name": name,
+			"pesan": pesan,
+		}
+
+		tmpl, err := template.ParseFiles(path.Join("views", "resultform.html"), path.Join("views", "layout.html"))
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "Send result form error, Keep calm", http.StatusInternalServerError)
+			return
+		}
+
+		err = tmpl.Execute(w, data)
+		if err != nil {
+			log.Println(err)
+			http.Error(w, "Shit happen, Keep calm", http.StatusInternalServerError)
+			return
+		}	
+
+		return
+	}
+
+	http.Error(w, "Post error, Take it easy boy", http.StatusBadRequest)
 }

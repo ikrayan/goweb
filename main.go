@@ -10,8 +10,13 @@ func main() {
 	mux := http.NewServeMux()
 
 	mux.HandleFunc("/", handler.HandlerIndex) //routing index
-	mux.HandleFunc("/about", handler.HandlerAbout) //routing index
 	mux.HandleFunc("/product", handler.ProductHandler) //routing index
+	mux.HandleFunc("/form", handler.FormHandler)
+	mux.HandleFunc("/member", handler.MemberHandler) 
+	mux.HandleFunc("/processform", handler.ProcessForm)
+
+	fileServer := http.FileServer(http.Dir("assets"))
+	mux.Handle("/static/", http.StripPrefix("/static", fileServer))
 
 	log.Println("Starting Port 8080")
 

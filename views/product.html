@@ -1,0 +1,29 @@
+{{ template "layout" .}}
+
+{{ define "main"}}
+<h3>Halaman Produk</h3>
+<table class="table">
+    <thead class="bg-light">
+        <tr>
+            <th scope="col">No</th>
+            <th scope="col">Foto Produk</th>
+            <th scope="col">Merek</th>
+            <th scope="col">Harga</th>
+            <th scope="col">Stok</th>
+            <th scope="col">Catatan</th>
+        </tr>
+    </thead>
+    <tbody>
+        {{ range .}}
+        <tr>
+            <th scope="row">{{ .ID }}</th>
+            <td><img src={{ .Photo }} alt="Foto Mobil" style="height: 200px; width: 300px;"></td>
+            <td>{{ .Name }}</td>
+            <td>{{ .Price }}</td>
+            <td>{{ .Stock }}</td>
+            <td>{{ .StockStatus }}</td>
+        </tr>
+        {{ end }}
+    </tbody>
+</table>
+{{ end }}

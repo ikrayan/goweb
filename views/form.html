@@ -1,0 +1,19 @@
+{{ template "layout" .}}
+
+{{ define "main" }}
+
+<form action="/processform" method="post">
+    <div class="mb-3">
+        <label for="name" class="form-label">Nama</label>
+        <input type="text" class="form-control" name="name" placeholder="Nama kamu" required>
+    </div>
+
+    <div class="mb-3">
+        <label for="name" class="form-label">Pesan</label>
+        <input type="text" class="form-control" name="pesan" placeholder="Pesan kamu" required>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kirim</button>
+</form>
+
+{{ end }}
