@@ -51,13 +51,13 @@ func ProductHandler(w http.ResponseWriter, r *http.Request) {
 	// 	return
 	// }
 
-	
-
 	// fmt.Fprintf(w, "Product page : %d", idNumb)
 	// data := map[string]interface{} {
 	// 	"content": idNumb,
 	// }
 	// data := entity.Product{ID: 1, Name: "Mobilio", Price: 220000000, Stock: 3}
+
+
 
 	tmpl, err := template.ParseFiles(path.Join("views", "product.html"), path.Join("views", "layout.html"))
 	if err != nil {
