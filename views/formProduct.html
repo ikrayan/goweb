@@ -1,0 +1,46 @@
+{{ template "layout" .}}
+
+{{ define "main" }}
+<h3>Tambah Product</h3>
+<hr>
+<form action="/processFormProduct" method="post">
+    <div class="row mb-3">
+        <label for="id" class="col-sm-2 col-form-label">ID Product</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="id" placeholder="ID Product" required>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="name" class="col-sm-2 col-form-label">Nama Product</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="name" placeholder="Nama Product" required>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="level" class="col-sm-2 col-form-label">Harga Product</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="price" placeholder="Harga Product" required>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="level" class="col-sm-2 col-form-label">Stock Product</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="stock" placeholder="Stock Product" required>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="photo" class="col-sm-2 col-form-label">Foto Member</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="photo" placeholder="Input link gambar ya" required>
+        </div>
+    </div>
+
+    <hr>
+    <button type="submit" class="btn btn-primary">Kirim</button>
+</form>
+
+{{ end }}

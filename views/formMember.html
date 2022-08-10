@@ -1,0 +1,55 @@
+{{ template "layout" .}}
+
+{{ define "main" }}
+<h3>Tambah Member</h3>
+<hr>
+<form action="/processFormMember" method="post">
+    <div class="row mb-3">
+        <label for="id" class="col-sm-2 col-form-label">ID Member</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="id" placeholder="ID Member" required>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="name" class="col-sm-2 col-form-label">Nama Member</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="name" placeholder="Nama Member" required>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="level" class="col-sm-2 col-form-label">Level Member</label>
+        <div class="col-sm-10">
+            <select class="form-select" aria-label="Default select example" name="level" required>
+                <option selected>Choose Level</option>
+                <option value="Newbie">Newbie</option>
+                <option value="Master">Master</option>
+                <option value="Syifu">Syifu</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="status" class="col-sm-2 col-form-label">Status Member</label>
+        <div class="col-sm-10">
+            <select class="form-select" aria-label="Default select example" name="status" required>
+                <option selected>Choose Status</option>
+                <option value="Active">Active</option>
+                <option value="Not Active">Not Active</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row mb-3">
+        <label for="photo" class="col-sm-2 col-form-label">Foto Member</label>
+        <div class="col-sm-10">
+            <input type="text" class="form-control" name="photo" placeholder="Input link gambar ya" required>
+        </div>
+    </div>
+
+    <hr>
+    <button type="submit" class="btn btn-primary">Kirim</button>
+</form>
+
+{{ end }}
